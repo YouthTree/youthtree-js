@@ -6,17 +6,20 @@ YouthTree.withNS 'Gallery', (ns) ->
       @selector: selector
       @items:    $ @selector
       @urls:     @items.map(-> @href).toArray()
+      @bindEvents()
 
     bindEvents: ->
-      @items.click ->
-        showFor @
+      self: @
+      @items.click (e) ->
+        e.preventDefault()
+        self.showFor @
         false
 
     showFor: (element) ->
       href: element.href
       index: @urls.indexOf href
       if index >= 0
-        showImages @urls.slice(index).concat(@urls.slice(0, index))
+        @showImages @urls.slice(index).concat(@urls.slice(0, index))
 
     showImages: (images) ->
       $.facybox {images: images}
