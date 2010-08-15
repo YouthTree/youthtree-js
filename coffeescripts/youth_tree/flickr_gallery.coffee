@@ -24,7 +24,7 @@ YouthTree.withNS 'FlickrGallery', (ns) ->
           img:  $('<img/>').attr('src', item.media.m)
           a:    $('<a></a>').attr('href', item.link)
           
-          $(selector).append(img.wrap(a.wrap(li)))
+          $(selector).append( li.append( a.append(img) ) )
       
   ns.setup: (user) ->
     @user:        user

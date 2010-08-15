@@ -26,7 +26,7 @@ YouthTree.withNS('FlickrGallery', function(ns) {
         li = $('<li></li>');
         img = $('<img/>').attr('src', item.media.m);
         a = $('<a></a>').attr('href', item.link);
-        return $(selector).append(img.wrap(a.wrap(li)));
+        return $(selector).append(li.append(a.append(img)));
       });
       return items;
     });
