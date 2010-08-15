@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Darcy Laycock"]
-  s.date = %q{2010-06-12}
+  s.date = %q{2010-08-15}
   s.description = %q{Shared Javascript tools across YouthTree apps.}
   s.email = %q{sutto@sutto.net}
   s.extra_rdoc_files = [
