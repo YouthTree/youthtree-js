@@ -1,13 +1,13 @@
 YouthTree.withNS('FlickrGallery', function(ns) {
-  var InnerFlickerGallery;
-  InnerFlickerGallery = function(selector, user) {
+  var InnerFlickrGallery;
+  InnerFlickrGallery = function(selector, user) {
     this.selector = selector;
     this.item = $(this.selector)[0];
-    this.feed = self.buildFeed;
     this.user = user;
+    this.feed = this.buildFeed();
     return this;
   };
-  InnerFlickerGallery.prototype.buildFeed = function() {
+  InnerFlickrGallery.prototype.buildFeed = function() {
     var domain, feed, method, path, protocol;
     protocol = 'http://';
     domain = 'api.flickr.com';
@@ -16,12 +16,21 @@ YouthTree.withNS('FlickrGallery', function(ns) {
     feed = protocol + domain + path + method + '?id=' + this.user + '&format=json&jsoncallback=?';
     return feed;
   };
-  InnerFlickerGallery.prototype.buildElements = function() {
-    return $.getJSON(this.feed, function(data) {
-      return $.each(data.items, function(i, items) {
-        return $('<img/>').attr('src', item.media.m).wrap('<a href="' + item.link + '"/></a>').appendTo(this.selector);
+  InnerFlickrGallery.prototype.buildElements = function() {
+    var feed, selector;
+    selector = this.selector;
+    feed = $.getJSON(this.feed, function(data) {
+      var items;
+      items = $.each(data.items, function(i, item) {
+        var a, img, li;
+        li = $('<li></li>');
+        img = $('<img/>').attr('src', item.media.m);
+        a = $('<a></a>').attr('href', item.link);
+        return $(selector).append(img.wrap(a.wrap(li)));
       });
+      return items;
     });
+    return feed;
   };
 
   ns.setup = function(user) {
@@ -30,8 +39,9 @@ YouthTree.withNS('FlickrGallery', function(ns) {
   };
   ns.create = function(selector) {
     var flickr_gallery;
-    flickr_gallery = new FlickrGallery(selector, this.user, this.api_key);
-    return flickr_gallery;
+    flickr_gallery = new InnerFlickrGallery(selector, this.user, this.api_key);
+    flickr_gallery.buildElements();
+    return console.log($(flickr_gallery.selector));
   };
   return ns.create;
 });

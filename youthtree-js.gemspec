@@ -19,8 +19,10 @@ Gem::Specification.new do |s|
     "README.md",
      "Rakefile",
      "coffeescripts/youth_tree.coffee",
+     "coffeescripts/youth_tree/flickr_gallery.coffee",
      "coffeescripts/youth_tree/gallery.coffee",
      "javascripts/youth_tree.js",
+     "javascripts/youth_tree/flickr_gallery.js",
      "javascripts/youth_tree/gallery.js",
      "lib/youthtree-js.rb",
      "youthtree-js.gemspec"
