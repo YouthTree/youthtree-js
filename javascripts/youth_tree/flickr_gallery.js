@@ -16,7 +16,7 @@ YouthTree.withNS('FlickrGallery', function(ns) {
     feed = protocol + domain + path + method + '?id=' + this.user + '&format=json&jsoncallback=?';
     return feed;
   };
-  InnerFlickrGallery.prototype.buildElements = function() {
+  InnerFlickrGallery.prototype.insert = function() {
     var feed, selector;
     selector = this.selector;
     feed = $.getJSON(this.feed, function(data) {
@@ -32,6 +32,20 @@ YouthTree.withNS('FlickrGallery', function(ns) {
     });
     return feed;
   };
+  InnerFlickrGallery.prototype.cyclify = function() {
+    var nav, nav_id, options;
+    nav_id = 'flickr_gallery_navigation';
+    nav = $('<div></div>').attr('id', nav_id);
+    this.selector.before(nav);
+    options = {
+      fx: 'zoom',
+      speedIn: 2500,
+      speedOut: 500,
+      timeOut: 300,
+      pager: nav_id
+    };
+    return this.selector.cycle(options);
+  };
 
   ns.setup = function(user) {
     this.user = user;
@@ -40,8 +54,8 @@ YouthTree.withNS('FlickrGallery', function(ns) {
   ns.create = function(selector) {
     var flickr_gallery;
     flickr_gallery = new InnerFlickrGallery(selector, this.user, this.api_key);
-    flickr_gallery.buildElements();
-    return console.log($(flickr_gallery.selector));
+    flickr_gallery.insert();
+    return flickr_gallery.cyclify();
   };
   return ns.create;
 });
