@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Darcy Laycock"]
-  s.date = %q{2010-08-15}
+  s.date = %q{2010-08-16}
   s.description = %q{Shared Javascript tools across YouthTree apps.}
   s.email = %q{sutto@sutto.net}
   s.extra_rdoc_files = [
@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
      "coffeescripts/youth_tree.coffee",
      "coffeescripts/youth_tree/flickr_gallery.coffee",
      "coffeescripts/youth_tree/gallery.coffee",
+     "javascripts/plugins/jquery/cycle.js",
      "javascripts/youth_tree.js",
      "javascripts/youth_tree/flickr_gallery.js",
      "javascripts/youth_tree/gallery.js",
