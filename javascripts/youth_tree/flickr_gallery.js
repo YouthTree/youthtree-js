@@ -17,18 +17,23 @@ YouthTree.withNS('FlickrGallery', function(ns) {
     return feed;
   };
   InnerFlickrGallery.prototype.insert = function() {
-    var feed, selector;
+    var feed, selector, that;
     selector = this.selector;
-    feed = $.getJSON(this.feed, function(data) {
-      var items;
-      items = $.each(data.items, function(i, item) {
-        var a, img, li;
-        li = $('<li></li>');
-        img = $('<img/>').attr('src', item.media.m);
-        a = $('<a></a>').attr('href', item.link);
-        return $(selector).append(li.append(a.append(img)));
-      });
-      return items;
+    that = this;
+    feed = $.ajax({
+      url: this.feed,
+      dataType: 'json',
+      success: function(data) {
+        var items;
+        items = $.each(data.items, function(i, item) {
+          var a, img, li;
+          li = $('<li></li>');
+          img = $('<img/>').attr('src', item.media.m);
+          a = $('<a></a>').attr('href', item.link);
+          return $(selector).append(li.append(a.append(img)));
+        });
+        return that.cyclify();
+      }
     });
     return feed;
   };
@@ -36,7 +41,7 @@ YouthTree.withNS('FlickrGallery', function(ns) {
     var nav, nav_id, options;
     nav_id = 'flickr_gallery_navigation';
     nav = $('<div></div>').attr('id', nav_id);
-    this.selector.before(nav);
+    $(this.selector).before(nav);
     options = {
       fx: 'zoom',
       speedIn: 2500,
@@ -44,7 +49,7 @@ YouthTree.withNS('FlickrGallery', function(ns) {
       timeOut: 300,
       pager: nav_id
     };
-    return this.selector.cycle(options);
+    return $(this.selector).cycle(options);
   };
 
   ns.setup = function(user) {
@@ -53,9 +58,8 @@ YouthTree.withNS('FlickrGallery', function(ns) {
   };
   ns.create = function(selector) {
     var flickr_gallery;
-    flickr_gallery = new InnerFlickrGallery(selector, this.user, this.api_key);
-    flickr_gallery.insert();
-    return flickr_gallery.cyclify();
+    flickr_gallery = new InnerFlickrGallery(selector, this.user);
+    return flickr_gallery.insert();
   };
   return ns.create;
 });

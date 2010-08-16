@@ -17,19 +17,25 @@ YouthTree.withNS 'FlickrGallery', (ns) ->
       
     insert: ->
       selector: @selector
-      feed: $.getJSON @feed, (data) ->
-        items: $.each data.items, (i,item) ->
-          li:     $('<li></li>')
-          img:    $('<img/>').attr('src', item.media.m)
-          a:      $('<a></a>').attr('href', item.link)
+      that:     @
+      feed: $.ajax({
+        url:      @feed,
+        dataType: 'json',
+        success: (data) ->
+          items: $.each data.items, (i,item) ->
+            li:     $('<li></li>')
+            img:    $('<img/>').attr('src', item.media.m)
+            a:      $('<a></a>').attr('href', item.link)
+            $(selector).append(li.append(a.append(img)))
           
-          $(selector).append(li.append(a.append(img)))
+          that.cyclify()
+      });
     
     cyclify: ->
       nav_id: 'flickr_gallery_navigation'
       nav:    $('<div></div>').attr('id', nav_id)
       
-      @selector.before(nav)
+      $(@selector).before(nav)
       
       options = {
         fx:      'zoom',
@@ -39,12 +45,11 @@ YouthTree.withNS 'FlickrGallery', (ns) ->
         pager:    nav_id
       }
       
-      @selector.cycle options
+      $(@selector).cycle options
         
   ns.setup: (user) ->
     @user:        user
     
   ns.create: (selector) ->
-    flickr_gallery: new InnerFlickrGallery selector, @user, @api_key
+    flickr_gallery: new InnerFlickrGallery selector, @user
     flickr_gallery.insert()
-    flickr_gallery.cyclify()
