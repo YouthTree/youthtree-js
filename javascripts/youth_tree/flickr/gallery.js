@@ -23,6 +23,19 @@ YouthTree.withNS('Flickr.Gallery', function(ns) {
       return ns.process(response.photoset.photo);
     });
   };
+  InnerFlickrGallery.prototype.fetchUserTagged = function(user, tag) {
+    var params;
+    params = {
+      tags: tag,
+      user_id: user,
+      sort: 'interestingness-desc',
+      content_type: '1',
+      media: 'photos'
+    };
+    return flickr.apiCall('flickr.photos.search', params, function(response) {
+      return ns.process(response.photos.photo);
+    });
+  };
   InnerFlickrGallery.prototype.process = function(photos) {
     var container;
     container = $(selector);
@@ -44,10 +57,16 @@ YouthTree.withNS('Flickr.Gallery', function(ns) {
       pager: ns.navigationID
     });
   };
-  return (ns.fromPhotoset = function(selector, photoset) {
+  ns.fromPhotoset = function(selector, photoset) {
     var flickr_gallery;
     flickr_gallery = new InnerFlickrGallery(selector);
     flickr_gallery.fetchPhotoset(photoset);
+    return flickr_gallery;
+  };
+  return (ns.fromUserTag = function(selector, user, tag) {
+    var flickr_gallery;
+    flickr_gallery = new InnerFlickrGallery(selector);
+    flickr_gallery.fetchUserTagged(user, tag);
     return flickr_gallery;
   });
 });

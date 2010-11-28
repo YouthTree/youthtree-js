@@ -1,9 +1,8 @@
 YouthTree.withNS('Flickr', function(ns) {
   ns.apiBaseURL = 'http://api.flickr.com/services/rest/';
   ns.defaultOptions = {
-    jsoncallback: '?',
     format: 'json',
-    apiKey: ''
+    api_key: ''
   };
   ns.defaultErrorHandler = function(response) {
     var _ref;
@@ -19,8 +18,14 @@ YouthTree.withNS('Flickr', function(ns) {
       method: name
     };
     $.extend(apiOptions, options, ns.defaultOptions);
-    return $.getJSON(ns.apiBaseURL, apiOptions, function(data) {
-      return data.stat === 'ok' ? callback(data) : errback(data);
+    return $.ajax({
+      url: ns.apiBaseURL,
+      dataType: 'jsonp',
+      jsonp: 'jsoncallback',
+      data: apiOptions,
+      success: function(data) {
+        return data.stat === 'ok' ? callback(data) : errback(data);
+      }
     });
   };
   return (ns.setup = function() {
