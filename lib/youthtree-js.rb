@@ -6,8 +6,7 @@ class YouthTreeJS
   end
 
   def self.register_framework!
-    Barista::Framework.register :name => 'youthtree', 
-                                :root => coffeescripts_root
+    Barista::Framework.register 'youthtree', coffeescripts_root
   end
 
   register_framework! if defined? Barista::Framework

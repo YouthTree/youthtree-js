@@ -3,9 +3,8 @@ YouthTree.withNS 'Flickr', (ns) ->
   ns.apiBaseURL = 'http://api.flickr.com/services/rest/'
 
   ns.defaultOptions =
-    jsoncallback: '?'
     format: 'json'
-    apiKey: ''
+    api_key: ''
 
   ns.defaultErrorHandler = (response) ->
     if window.console?
@@ -17,11 +16,16 @@ YouthTree.withNS 'Flickr', (ns) ->
     # Do something here,
     apiOptions = method: name
     $.extend apiOptions, options, ns.defaultOptions
-    $.getJSON ns.apiBaseURL, apiOptions, (data) ->
-      if data.stat is 'ok'
-        callback data
-      else
-        errback data
+    $.ajax
+      url:      ns.apiBaseURL
+      dataType: 'jsonp',
+      jsonp:    'jsoncallback'
+      data:     apiOptions
+      success:  (data) ->
+        if data.stat is 'ok'
+          callback data
+        else
+          errback data
 
   ns.setup = ->
     # Get the current api key
