@@ -24,5 +24,6 @@ task :compile_scripts do
   Dir["coffeescripts/**/*.coffee"].each do |cs|
     output = File.dirname(cs).gsub("coffeescripts", "javascripts")
     system "coffee", "-c", "--no-wrap", '-o', output, cs
+  end
 end
 
