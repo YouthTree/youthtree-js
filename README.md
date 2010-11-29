@@ -4,7 +4,52 @@ A set of tools for common javascript functionality shared across YouthTree appli
 
 Developed primarily for [TEDxPerth](http://tedxperth.org/) and [Big Help Mob](http://bighelpmob.org/)
 
-Relies on [Shuriken](http://github.com/Sutto/shuriken/).
+Relies on [Shuriken](http://github.com/Sutto/shuriken/)..
+
+## Currently provided tools
+
+YouthTree JS provides a small number of different pieces of code for a variety of common tasks.
+
+Out of the box, the main namespaces are:
+
+### YouthTree.CKEditor
+
+A simple wrapper around CKEditor that unobtrusively sets up the jQuery adapter on fields
+with a class of `.ckeditor` on the container. Also, the width is set to deal with the
+common [bhm-admin](http://github.com/YouthTree/bhm-admin) sides images.
+
+### YouthTree.ConvertableEditor
+
+Even more magic for YouthTree.CKEditor. Let's you mark a fieldset wrapper with `.convertable` and it'll
+automatically find the select and textarea, showing when the select has a format of "raw". Designed
+to work out of the box with how most [almost-happy](http://github.com/Sutto/almost-happy) editors work.
+
+### YouthTree.Disqus
+
+Unobtrusively adds the Disqus html based on the presence of meta tags in the page with the names:
+
+* `disqus-identifier`
+* `disqus-site`
+* `disqus-developer`
+
+Aka, super simple Disqus commenting for pretty much any website.
+
+### YouthTree.Flickr
+
+Simple, unobtrusive wrapper around the flickr api for use with the Flickr Gallery.
+
+### YouthTree.Flickr.Gallery
+
+Gives the ability to pull in simple HTML from given flickr tags / photo set ids.
+
+### YouthTree.Gallery
+
+Generic facy-boxed autosetup and gallery features based on simple markup.
+
+### YouthTree.Util
+
+A set of common JS helper methods similar to their Rails counterparts,
+exposed via JS for use in arbitrary rails apps frontends.
 
 ## Contributing ##
 
