@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{youthtree-js}
-  s.version = "0.3.0.pre"
+  s.version = "0.3.0"
 
-  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Darcy Laycock"]
-  s.date = %q{2010-11-28}
+  s.date = %q{2010-11-29}
   s.description = %q{Shared Javascript tools across YouthTree apps.}
   s.email = %q{sutto@sutto.net}
   s.extra_rdoc_files = [
@@ -19,13 +19,21 @@ Gem::Specification.new do |s|
     "README.md",
     "Rakefile",
     "coffeescripts/youth_tree.coffee",
+    "coffeescripts/youth_tree/ck_editor.coffee",
+    "coffeescripts/youth_tree/convertable_editor.coffee",
+    "coffeescripts/youth_tree/disqus.coffee",
     "coffeescripts/youth_tree/flickr.coffee",
     "coffeescripts/youth_tree/flickr/gallery.coffee",
     "coffeescripts/youth_tree/gallery.coffee",
+    "coffeescripts/youth_tree/util.coffee",
     "javascripts/youth_tree.js",
+    "javascripts/youth_tree/ck_editor.js",
+    "javascripts/youth_tree/convertable_editor.js",
+    "javascripts/youth_tree/disqus.js",
     "javascripts/youth_tree/flickr.js",
     "javascripts/youth_tree/flickr/gallery.js",
     "javascripts/youth_tree/gallery.js",
+    "javascripts/youth_tree/util.js",
     "lib/youthtree-js.rb",
     "youthtree-js.gemspec"
   ]
