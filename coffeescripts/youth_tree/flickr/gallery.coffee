@@ -7,53 +7,42 @@ YouthTree.withNS 'Flickr.Gallery', (ns) ->
   
   class InnerFlickrGallery
     
-    constructor: (@selector, @user) ->
-      $(@selector).addClass ns.containerClass
-      @feed = @buildFeed()
+    constructor: (@name, @container) ->
+      @container.addClass ns.containerClass
       
-    buildFeed: -> "#{ns.apiBaseURL}?id=#{@user}&format=json&jsoncallback=?"
-      
-    fetchPhotoset: (photosetId) ->
+    fetchPhotoset: (photosetId, extraParams) ->
       params = 
         photoset_id: photosetId
         extras:      'url_sq,url_m'
-      flickr.apiCall 'flickr.photosets.getPhotos', params, (response) ->
-        ns.process response.photoset.photo
+      $.extend params, extraParams if extraParams?
+      flickr.apiCall 'flickr.photosets.getPhotos', params, (response) =>
+        @process response.photoset.photo
     
-    fetchUserTagged: (user, tag) ->
+    fetchUserTagged: (user, tag, extraParams) ->
       params =
         tags: tag
         user_id: user
         sort: 'interestingness-desc'
         content_type: '1'
         media: 'photos'
-      flickr.apiCall 'flickr.photos.search', params, (response) ->
-        ns.process response.photos.photo
+      $.extend params, extraParams if extraParams?
+      flickr.apiCall 'flickr.photos.search', params, (response) =>
+        @process response.photos.photo
       
     process: (photos) ->
-      container = $ selector
-      $.each photos, (i, item) ->
+      @container.empty()
+      $.each photos, (i, item) =>
         img = $('<img/>').attr('src', item.url_sq)
-        a = $('<a></a>').attr('href', item.url_m).append img
-        container.append $('<li></li>').append(a.append(img))
-      self.cyclify()
-          
+        link = $('<a></a>').attr('href', item.url_m).append img
+        @container.append link
+      YouthTree.Gallery.create @name, @container.find('a')
     
-    cyclify: (container) ->
-      container.before $('<div></div>').addClass(ns.containerClass)
-      container.cycle
-        fx:      'zoom',
-        speedIn:  2500, 
-        speedOut: 500,
-        timeOut:  300,
-        pager:    ns.navigationID
-    
-  ns.fromPhotoset = (selector, photoset) ->
-    flickr_gallery = new InnerFlickrGallery selector
-    flickr_gallery.fetchPhotoset photoset
+  ns.fromPhotoset = (name, container, photoset, extraParams) ->
+    flickr_gallery = new InnerFlickrGallery name, container
+    flickr_gallery.fetchPhotoset photoset, extraParams
     flickr_gallery
     
-  ns.fromUserTag = (selector, user, tag) ->
-    flickr_gallery = new InnerFlickrGallery selector
-    flickr_gallery.fetchUserTagged user, tag
+  ns.fromUserTag = (name, container, user, tag, extraParams) ->
+    flickr_gallery = new InnerFlickrGallery name, container
+    flickr_gallery.fetchUserTagged user, tag, extraParams
     flickr_gallery
