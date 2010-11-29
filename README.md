@@ -4,7 +4,7 @@ A set of tools for common javascript functionality shared across YouthTree appli
 
 Developed primarily for [TEDxPerth](http://tedxperth.org/) and [Big Help Mob](http://bighelpmob.org/)
 
-Relies on [Shuriken](http://github.com/Sutto/shuriken/)..
+Relies on [Shuriken](http://github.com/Sutto/shuriken/).
 
 ## Currently provided tools
 
