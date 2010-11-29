@@ -1,29 +1,31 @@
+var __bind = function(func, context) {
+    return function(){ return func.apply(context, arguments); };
+  };
 YouthTree.withNS('Flickr.Gallery', function(ns) {
   var InnerFlickrGallery, flickr;
   flickr = YouthTree.Flickr;
   ns.navigationClass = 'flickr-gallery-navigation';
   ns.containerClass = 'flickr-gallery';
   InnerFlickrGallery = function(_arg, _arg2) {
-    this.user = _arg2;
-    this.selector = _arg;
-    $(this.selector).addClass(ns.containerClass);
-    this.feed = this.buildFeed();
+    this.container = _arg2;
+    this.name = _arg;
+    this.container.addClass(ns.containerClass);
     return this;
   };
-  InnerFlickrGallery.prototype.buildFeed = function() {
-    return "" + (ns.apiBaseURL) + "?id=" + (this.user) + "&format=json&jsoncallback=?";
-  };
-  InnerFlickrGallery.prototype.fetchPhotoset = function(photosetId) {
+  InnerFlickrGallery.prototype.fetchPhotoset = function(photosetId, extraParams) {
     var params;
     params = {
       photoset_id: photosetId,
       extras: 'url_sq,url_m'
     };
-    return flickr.apiCall('flickr.photosets.getPhotos', params, function(response) {
-      return ns.process(response.photoset.photo);
-    });
+    if (typeof extraParams !== "undefined" && extraParams !== null) {
+      $.extend(params, extraParams);
+    }
+    return flickr.apiCall('flickr.photosets.getPhotos', params, __bind(function(response) {
+      return this.process(response.photoset.photo);
+    }, this));
   };
-  InnerFlickrGallery.prototype.fetchUserTagged = function(user, tag) {
+  InnerFlickrGallery.prototype.fetchUserTagged = function(user, tag, extraParams) {
     var params;
     params = {
       tags: tag,
@@ -32,41 +34,33 @@ YouthTree.withNS('Flickr.Gallery', function(ns) {
       content_type: '1',
       media: 'photos'
     };
-    return flickr.apiCall('flickr.photos.search', params, function(response) {
-      return ns.process(response.photos.photo);
-    });
+    if (typeof extraParams !== "undefined" && extraParams !== null) {
+      $.extend(params, extraParams);
+    }
+    return flickr.apiCall('flickr.photos.search', params, __bind(function(response) {
+      return this.process(response.photos.photo);
+    }, this));
   };
   InnerFlickrGallery.prototype.process = function(photos) {
-    var container;
-    container = $(selector);
-    $.each(photos, function(i, item) {
-      var a, img;
+    this.container.empty();
+    $.each(photos, __bind(function(i, item) {
+      var img, link;
       img = $('<img/>').attr('src', item.url_sq);
-      a = $('<a></a>').attr('href', item.url_m).append(img);
-      return container.append($('<li></li>').append(a.append(img)));
-    });
-    return self.cyclify();
+      link = $('<a></a>').attr('href', item.url_m).append(img);
+      return this.container.append(link);
+    }, this));
+    return YouthTree.Gallery.create(this.name, this.container.find('a'));
   };
-  InnerFlickrGallery.prototype.cyclify = function(container) {
-    container.before($('<div></div>').addClass(ns.containerClass));
-    return container.cycle({
-      fx: 'zoom',
-      speedIn: 2500,
-      speedOut: 500,
-      timeOut: 300,
-      pager: ns.navigationID
-    });
-  };
-  ns.fromPhotoset = function(selector, photoset) {
+  ns.fromPhotoset = function(name, container, photoset, extraParams) {
     var flickr_gallery;
-    flickr_gallery = new InnerFlickrGallery(selector);
-    flickr_gallery.fetchPhotoset(photoset);
+    flickr_gallery = new InnerFlickrGallery(name, container);
+    flickr_gallery.fetchPhotoset(photoset, extraParams);
     return flickr_gallery;
   };
-  return (ns.fromUserTag = function(selector, user, tag) {
+  return (ns.fromUserTag = function(name, container, user, tag, extraParams) {
     var flickr_gallery;
-    flickr_gallery = new InnerFlickrGallery(selector);
-    flickr_gallery.fetchUserTagged(user, tag);
+    flickr_gallery = new InnerFlickrGallery(name, container);
+    flickr_gallery.fetchUserTagged(user, tag, extraParams);
     return flickr_gallery;
   });
 });
