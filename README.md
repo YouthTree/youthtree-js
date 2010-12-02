@@ -12,17 +12,31 @@ YouthTree JS provides a small number of different pieces of code for a variety o
 
 Out of the box, the main namespaces are:
 
-### YouthTree.CKEditor
+### YouthTree.Forms.CKEditor
 
 A simple wrapper around CKEditor that unobtrusively sets up the jQuery adapter on fields
 with a class of `.ckeditor` on the container. Also, the width is set to deal with the
 common [bhm-admin](http://github.com/YouthTree/bhm-admin) sides images.
 
-### YouthTree.ConvertableEditor
+### YouthTree.Forms.ConvertableEditor
 
 Even more magic for YouthTree.CKEditor. Let's you mark a fieldset wrapper with `.convertable` and it'll
 automatically find the select and textarea, showing when the select has a format of "raw". Designed
 to work out of the box with how most [almost-happy](http://github.com/Sutto/almost-happy) editors work.
+
+### YouthTree.Forms.ValueCloner
+
+Unobtrusive support for a simple way to clone the value between two different fields.
+
+Ideally useful for things with a start and end time where you want to make it possible
+to provide a button to clone the value into the second.
+
+### YouthTree.Forms.DatePicker
+
+Simple support for http://trentrichardson.com/examples/timepicker/ being unobtrusively
+added to a given form.
+
+Also, will hook up jQuery UI datepickers.
 
 ### YouthTree.Disqus
 
