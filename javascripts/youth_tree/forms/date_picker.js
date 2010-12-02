@@ -15,7 +15,7 @@ YouthTree.withNS('Forms.DatePicker', function(ns) {
     if (!(typeof (_ref = $.fn.datetimepicker) !== "undefined" && _ref !== null)) {
       return null;
     }
-    return $('input.ui-date-picker').datetimepicker({
+    return $('input.ui-datetime-picker').datetimepicker({
       dateFormat: ns.dateFormat,
       timeFormat: ns.timeFormat,
       ampm: true

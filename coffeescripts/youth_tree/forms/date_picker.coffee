@@ -9,7 +9,7 @@ YouthTree.withNS 'Forms.DatePicker', (ns) ->
   
   ns.makeDateTimePickers = ->
     return unless $.fn.datetimepicker?
-    $('input.ui-date-picker').datetimepicker
+    $('input.ui-datetime-picker').datetimepicker
       dateFormat: ns.dateFormat
       timeFormat: ns.timeFormat
       ampm: true
