@@ -1,4 +1,4 @@
-YouthTree.withNS 'CKEditor', (ns) ->
+YouthTree.withNS 'Forms.CKEditor', (ns) ->
 
   window.CKEDITOR_BASEPATH = '/ckeditor/'
   

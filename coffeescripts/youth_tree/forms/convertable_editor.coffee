@@ -1,14 +1,16 @@
-YouthTree.withNS 'ConvertableEditor', (ns) ->
+YouthTree.withNS 'Forms.ConvertableEditor', (ns) ->
+
+  CKEditor = YouthTree.Forms.CKEditor
 
   ns.containerSelector = 'fieldset.inputs.convertable'
   ns.editorSelector =    'textarea'
   ns.formatSelector =    'select'
   
   ns.showEditor = (s) ->
-    YouthTree.CKEditor.makeEditor s
+    CKEditor.makeEditor s
     
   ns.hideEditor = (s) ->
-    YouthTree.CKEditor.destroyEditor s
+    CKEditor.destroyEditor s
     
   ns.shouldShowEditor = (s) ->
     s.find(ns.formatSelector).val() is "raw"

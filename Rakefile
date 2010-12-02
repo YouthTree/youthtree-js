@@ -27,3 +27,4 @@ task :compile_scripts do
   end
 end
 
+task :default => :compile_scripts
