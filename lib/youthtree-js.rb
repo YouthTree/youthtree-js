@@ -1,5 +1,5 @@
 class YouthTreeJS
-  VERSION = "0.3.0".freeze
+  VERSION = "0.4.0".freeze
 
   def self.coffeescripts_root
     File.expand_path('../coffeescripts', File.dirname(__FILE__))
